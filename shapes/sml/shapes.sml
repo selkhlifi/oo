@@ -1,7 +1,8 @@
 signature SHAPES =
 sig
     val area : string * string -> int
-    exception ShapeNotSupported
+    val perimeter : string * string -> int
+    exception NoSuchShapeException
 end
 
 structure Shapes :> SHAPES =
@@ -11,14 +12,9 @@ structure Shapes :> SHAPES =
 				   | Rectangle of int * int
 				   | Triangle of int * int
 							   
-		    exception ShapeNotSupported
+		    exception NoSuchShapeException
 
-		    fun calculate_area shape =
-			case shape of
-			    Square (l) => l*l
-			  | Rectangle (l, w) => l*w
-			  | Triangle (l, b) => (l*b) div 2
-							     
+
 		    fun create_shape (name, dims) =
 			let
 			    val dims_arr_of_str = String.tokens (fn c => c = #",") dims
@@ -32,9 +28,23 @@ structure Shapes :> SHAPES =
 			      | "TRIANGLE" => let val l::b::_ = dims_arr_of_ints
 					      in Triangle (l, b)
 					      end
-			      | _ => raise ShapeNotSupported
+			      | _ => raise NoSuchShapeException
 			end
 
+		    fun calculate_area shape =
+			case shape of
+			    Square (l) => l*l
+			  | Rectangle (l, w) => l*w
+			  | Triangle (l, b) => (l*b) div 2
+
+		    fun calculate_perimeter shape =
+			case shape of
+			    Square (l) => 4*l
+			  | Rectangle (l, w) => 2*(l+w)
+			  | Triangle (l, b) => 3*b
+
 		    val area  = calculate_area o create_shape
-				       
+
+		    val perimeter  = calculate_perimeter o create_shape
+							       
 		    end
