@@ -1,11 +1,12 @@
 signature SHAPES =
 sig
-    val area : string -> string -> int
+    val area : string * string -> int
     exception ShapeNotSupported
 end
 
 structure Shapes :> SHAPES =
 		    struct
+		    
 		    datatype shape = Square of int
 				   | Rectangle of int * int
 				   | Triangle of int * int
@@ -18,23 +19,22 @@ structure Shapes :> SHAPES =
 			  | Rectangle (l, w) => l*w
 			  | Triangle (l, b) => (l*b) div 2
 							     
-		    fun create_shape name dims =
+		    fun create_shape (name, dims) =
 			let
-			    val tokens = map (fn s => valOf (Int.fromString s)) (String.tokens (fn c => c = #",") dims)
+			    val dims_arr_of_str = String.tokens (fn c => c = #",") dims
+			    val dims_arr_of_ints = map (valOf o Int.fromString) dims_arr_of_str
 			in
 			    case name of
-				"SQUARE" => Square(hd tokens)
-			      | "RECTANGLE" => let val l = hd tokens
-						   val w = hd (tl tokens)
+				"SQUARE" => Square(hd dims_arr_of_ints)
+			      | "RECTANGLE" => let val l::w::_ = dims_arr_of_ints
 					       in Rectangle(l, w)
 					       end
-			      | "TRIANGLE" => let val l = hd tokens
-						  val b = hd (tl tokens)
+			      | "TRIANGLE" => let val l::b::_ = dims_arr_of_ints
 					      in Triangle (l, b)
 					      end
 			      | _ => raise ShapeNotSupported
 			end
-		    fun area name dims =
-			calculate_area (create_shape name dims)
+
+		    val area  = calculate_area o create_shape
 				       
 		    end
