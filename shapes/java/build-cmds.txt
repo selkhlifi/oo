@@ -1,0 +1,37 @@
+=> Required dependencies: junit-4.12.jar, hamcrest-core-1.3.jar
+
+0) To build the tests, you are free to use every thing is suitable for you : IDE, maven, ...
+
+1) For me some old plain unix commands are all that I need
+
+oo/
+	/java
+	    /src
+		/com
+		   /selkhlifi
+		      /oo
+			/shapes
+				*.java
+	    /test
+		/com
+		   /selkhlifi
+		      /oo
+			/shapes
+				*.java
+	    /bin
+		/com
+		   /selkhlifi
+		      /oo
+			/shapes
+				*.class
+	
+	    /lib/[required dependecies].jar
+            /bin
+3) From "java" directory, run a Terminal and executes the commands bellow
+
+..oo/shapes/java$ javac -d bin/ src/com/selkhlifi/oo/shapes/*.java
+..oo/shapes/java$ javac -cp ./lib/*:./bin/:. -d bin/ test/com/selkhlifi/oo/shapes/ShapesTest.java
+..oo/shapes/java$ java -cp lib/*:bin/:. org.junit.runner.JUnitCore com.selkhlifi.oo.shapes.ShapesTest
+
+
+
