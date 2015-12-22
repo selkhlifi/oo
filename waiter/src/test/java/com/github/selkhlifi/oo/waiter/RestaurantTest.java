@@ -1,7 +1,6 @@
-package com.nespresso.exercise.waiter;
+package com.github.selkhlifi.oo.waiter;
 
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
 public class RestaurantTest {
