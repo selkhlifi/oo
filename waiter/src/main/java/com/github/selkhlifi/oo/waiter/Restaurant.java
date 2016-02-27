@@ -9,13 +9,13 @@ public class Restaurant {
     private final List<Table> tables = new ArrayList<>();
 
     public int initTable(int sizeOfTable) {
-        Table table = new Table(sizeOfTable, tables.size() + 1, new ArrayList<>());
-        tables.add(table);
-        return table.getId();
+        int tableId = tables.size() + 1;
+        tables.add(new Table(sizeOfTable, tableId));
+        return tableId;
     }
 
-    public void customerSays(int tableId, String message) {
-        Command command = Command.create(message);
+    public void customerSays(int tableId, String str) {
+        Command command = Command.create(str);
         getTable(tableId).add(command);
     }
 

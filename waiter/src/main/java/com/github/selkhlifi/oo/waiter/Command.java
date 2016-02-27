@@ -2,7 +2,6 @@ package com.github.selkhlifi.oo.waiter;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public class Command {
 
@@ -45,10 +44,21 @@ public class Command {
     protected String client() {
         return client;
     }
+
+    boolean isMultiple() {
+        return dish.contains(" for ");
+    }
+
     @Override
     public String toString() {
         return dish;
     }
+
+    public String getDish() {
+        return dish;
+    }
+
+
 
     static class Same extends Command {
 
